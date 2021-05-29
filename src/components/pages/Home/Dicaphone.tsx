@@ -20,13 +20,14 @@ const Dictaphone: VFC = () => {
         !isCorrect && setIsCorrect(true);
         console.log('正解です！');
         setTimeout(() => {
+          resetTranscript;
           setIsCorrect(false);
         }, 3000);
       },
       matchInterim: true,
     },
   ];
-  const { transcript } = useSpeechRecognition({ commands });
+  const { transcript, resetTranscript } = useSpeechRecognition({ commands });
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return (
