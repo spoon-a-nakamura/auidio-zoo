@@ -18,25 +18,17 @@ const Dictaphone: VFC = () => {
   const commands = [
     {
       command: [
-        'ぞう',
         '象',
         '蔵',
         'ぞうさん',
         'エレファント',
         '豚さん',
         '豚',
-        'ぶた',
-        '歌',
         'ひよこ',
-        'ヒヨコ',
-        'ぱんだ',
         'パンダ',
-        'カバ',
         'かば',
-        'ねずみ',
         'ネズミ',
         'マウス',
-        'まうす',
       ],
       callback: () => {
         !isCorrect && setIsCorrect(true);
