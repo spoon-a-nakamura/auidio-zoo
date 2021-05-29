@@ -6,11 +6,16 @@ import SpeechRecognition, {
 import { device } from '../../../utils/MediaQuery';
 import Confetti from 'react-confetti';
 
-console.clear;
-
 const Dictaphone: VFC = () => {
   useEffect(() => {
     SpeechRecognition.startListening;
+    console.log('録音開始');
+    console.log(transcript);
+    console.log(isCorrect);
+    setTimeout(() => {
+      SpeechRecognition.stopListening;
+      console.log('録音停止');
+    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SpeechRecognition.startListening()]);
 
@@ -19,17 +24,16 @@ const Dictaphone: VFC = () => {
     {
       command: ['ぞう', '象', 'ぞうさん', 'エレファント'],
       callback: () => {
-        isCorrect
-          ? setTimeout(() => {
-              setIsCorrect(false);
-            }, 1500)
-          : setIsCorrect(true);
+        !isCorrect && setIsCorrect(true);
+        console.log('正解です！');
+        setTimeout(() => {
+          setIsCorrect(false);
+        }, 3000);
       },
     },
   ];
   const { transcript } = useSpeechRecognition({ commands });
 
-  console.log(isCorrect);
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return (
       <p>
@@ -130,6 +134,9 @@ const CorrectWrap = styled.div`
   width: 300px;
   height: 300px;
   backdrop-filter: blur(20px);
+  @media ${device.underTablet} {
+    transform: scale(0.5) translateY(-50%);
+  }
 `;
 const CorrectMessage = styled.p`
   position: relative;
