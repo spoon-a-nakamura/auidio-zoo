@@ -1,6 +1,6 @@
-import emotionReset from 'emotion-reset'
-import { Global, css } from '@emotion/react'
-import { jaSansLight } from './Font'
+import emotionReset from 'emotion-reset';
+import { Global, css } from '@emotion/react';
+import { jaSansLight } from './Font';
 
 export default function GlobalCss() {
   return (
@@ -20,13 +20,6 @@ export default function GlobalCss() {
           font-size: 14px;
           color: #fff;
           background: #080d1b;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          text-align: center;
-          width: 100%;
-          height: 100%;
           ${jaSansLight}
         }
         #__next {
@@ -47,5 +40,5 @@ export default function GlobalCss() {
         }
       `}
     />
-  )
+  );
 }
