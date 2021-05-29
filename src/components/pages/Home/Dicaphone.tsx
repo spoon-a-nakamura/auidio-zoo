@@ -1,40 +1,69 @@
 import styled from '@emotion/styled';
-import React, { VFC } from 'react';
+import React, { useEffect, useState, VFC } from 'react';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
+import { device } from '../../../utils/MediaQuery';
+import Confetti from 'react-confetti';
 
-const commands = [
-  {
-    command: 'ぞうさん',
-    callback: () => alert('正解です！'),
-    matchInterim: true,
-  },
-];
+console.clear;
 
 const Dictaphone: VFC = () => {
-  const { transcript, resetTranscript } = useSpeechRecognition({ commands });
+  useEffect(() => {
+    SpeechRecognition.startListening;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [SpeechRecognition.startListening()]);
 
+  const [isCorrect, setIsCorrect] = useState(false);
+  const commands = [
+    {
+      command: ['ぞう', '象', 'ぞうさん', 'エレファント'],
+      callback: () => {
+        !isCorrect && setIsCorrect(true);
+        setTimeout(() => {
+          setIsCorrect(false);
+        }, 5500);
+      },
+    },
+  ];
+  const { transcript } = useSpeechRecognition({ commands });
+
+  console.log(isCorrect);
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return (
       <p>
-        このブラウザは音声認識に対応していません。お使いのOSを最新にアップデートしていただくことで、音声認識機能をご利用いただけます。
+        このブラウザは音声認識に対応していません。
+        <wbr />
+        お使いのOSを最新にアップデートしていただくことで、
+        <wbr />
+        音声認識機能をご利用いただけます。
       </p>
     );
   }
 
   return (
     <Root>
-      <Heading>STARTボタンを押して、好きな動物の名前を言ってください。</Heading>
-      <ButtonGroup>
-        {/* TODO: onClick と startListening の型関係解決 */}
-        <Button onClick={SpeechRecognition.startListening}>START</Button>
-        <Button onClick={SpeechRecognition.stopListening}>STOP</Button>
-        <Button onClick={resetTranscript}>RESET</Button>
-      </ButtonGroup>
       <Box>
-        <Transcript>{transcript}</Transcript>
+        <Transcript>{transcript ? transcript : 'ぼくだーれだ？'}</Transcript>
       </Box>
+      {isCorrect && (
+        <>
+          <CorrectWrap>
+            <CorrectMessage>正解！</CorrectMessage>
+          </CorrectWrap>
+          <Confetti
+            recycle={true}
+            numberOfPieces={40}
+            style={{
+              width: '100%',
+              height: 'auto',
+              position: 'fixed',
+              top: 0,
+              left: 0,
+            }}
+          />
+        </>
+      )}
     </Root>
   );
 };
@@ -47,28 +76,10 @@ const Root = styled.div`
   flex-direction: column;
   text-align: center;
   height: 100vh;
-`;
-const Heading = styled.h1`
-  font-size: 20px;
-`;
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 50px auto;
-`;
-const Button = styled.button`
-  padding: 10px 40px;
-  margin: 20px 10px;
-  font-size: 20px;
-  border-radius: 100px;
-  background: #333;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  transition: all ease 0.4s;
-  &:hover {
-    background: #222;
+  width: 100%;
+  background: url(/images/animals/elephant_pc@2x.png) center / contain no-repeat;
+  @media ${device.underTablet} {
+    background-image: url(/images/animals/elephant_sp@2x.png);
   }
 `;
 const Box = styled.div`
@@ -76,10 +87,54 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: #111;
-  padding: 100px;
+  background: #fff;
+  border-radius: 1000px;
+  padding: 5vh 100px;
+  margin: 1vh auto auto;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all ease-in-out 0.3s;
+  animation: box 2s ease-in-out infinite;
+  @media ${device.underTablet} {
+    padding: 3vh 10vw;
+    margin: auto auto 10vh;
+  }
+  @keyframes box {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 `;
 const Transcript = styled.p`
-  padding: 50px;
-  font-size: 30px;
+  font-size: 40px;
+  transition: all ease-in-out 0.3s;
+  @media ${device.underTablet} {
+    font-size: 5vw;
+  }
+`;
+const CorrectWrap = styled.div`
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  top: 50vh;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 1000px;
+  width: 300px;
+  height: 300px;
+  backdrop-filter: blur(20px);
+`;
+const CorrectMessage = styled.p`
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.2em;
+  font-size: 40px;
+  padding: 10px;
 `;

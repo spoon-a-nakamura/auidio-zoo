@@ -1,6 +1,6 @@
 export const adobeLoader = (d) => {
   var config = {
-      kitId: 'jwu2rih',
+      kitId: 'ytr1jkf',
       scriptTimeout: 3000,
       async: true,
     },

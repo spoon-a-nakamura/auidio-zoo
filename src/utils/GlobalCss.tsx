@@ -1,6 +1,5 @@
 import emotionReset from 'emotion-reset';
 import { Global, css } from '@emotion/react';
-import { jaSansLight } from './Font';
 
 export default function GlobalCss() {
   return (
@@ -18,9 +17,11 @@ export default function GlobalCss() {
           padding: 0;
           margin: 0;
           font-size: 14px;
-          color: #fff;
-          background: #080d1b;
-          ${jaSansLight}
+          color: #333;
+          background: #fff;
+          font-family: vdl-megamaru, sans-serif;
+          font-weight: 400;
+          font-style: normal;
         }
         #__next {
         }
