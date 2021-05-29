@@ -18,17 +18,25 @@ const Dictaphone: VFC = () => {
   const commands = [
     {
       command: [
+        'ぞう',
         '蔵',
         '象',
+        'ぶた',
         '豚',
+        '歌',
         'ひよこ',
+        'ぱんだ',
         'パンダ',
         'カバ',
+        'かば',
+        'ネズミ',
         'ねずみ',
+        'マウス',
         'まうす',
       ],
       callback: () => {
         setIsCorrect(true);
+        resetTranscript;
         setTimeout(() => {
           animal === 'elephant' && setAnimal('pig');
           animal === 'pig' && setAnimal('chick');
@@ -42,7 +50,8 @@ const Dictaphone: VFC = () => {
       matchInterim: true,
     },
   ];
-  const { transcript, interimTranscript } = useSpeechRecognition({ commands });
+  const { transcript, interimTranscript, resetTranscript } =
+    useSpeechRecognition({ commands });
   useEffect(() => {
     SpeechRecognition.startListening;
     // eslint-disable-next-line react-hooks/exhaustive-deps
