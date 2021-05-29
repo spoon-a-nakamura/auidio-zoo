@@ -9,6 +9,7 @@ import Confetti from 'react-confetti';
 const Dictaphone: VFC = () => {
   useEffect(() => {
     SpeechRecognition.startListening;
+    finalTranscript && SpeechRecognition.abortListening;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SpeechRecognition.startListening()]);
 
@@ -19,15 +20,19 @@ const Dictaphone: VFC = () => {
       callback: () => {
         !isCorrect && setIsCorrect(true);
         console.log('正解です！');
+        SpeechRecognition.abortListening;
         setTimeout(() => {
           resetTranscript;
           setIsCorrect(false);
+          SpeechRecognition.startListening();
         }, 3000);
       },
       matchInterim: true,
     },
   ];
-  const { transcript, resetTranscript } = useSpeechRecognition({ commands });
+  const { transcript, resetTranscript, finalTranscript } = useSpeechRecognition(
+    { commands },
+  );
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return (
@@ -40,17 +45,15 @@ const Dictaphone: VFC = () => {
       </p>
     );
   }
-
   return (
     <Root>
       <Box>
-        <Transcript>{transcript ? transcript : 'ぼくだーれだ？'}</Transcript>
+        <Transcript>
+          {isCorrect ? '正解！' : transcript ? transcript : 'ぼくだーれだ？'}
+        </Transcript>
       </Box>
       {isCorrect && (
         <>
-          <CorrectWrap>
-            <CorrectMessage>正解！</CorrectMessage>
-          </CorrectWrap>
           <Confetti
             recycle={true}
             numberOfPieces={40}
