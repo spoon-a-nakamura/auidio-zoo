@@ -19,10 +19,11 @@ const Dictaphone: VFC = () => {
     {
       command: ['ぞう', '象', 'ぞうさん', 'エレファント'],
       callback: () => {
-        !isCorrect && setIsCorrect(true);
-        setTimeout(() => {
-          setIsCorrect(false);
-        }, 5500);
+        isCorrect
+          ? setTimeout(() => {
+              setIsCorrect(false);
+            }, 1500)
+          : setIsCorrect(true);
       },
     },
   ];
