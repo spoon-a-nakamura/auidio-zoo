@@ -20,6 +20,13 @@ export default function GlobalCss() {
           font-size: 14px;
           color: #fff;
           background: #080d1b;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          text-align: center;
+          width: 100%;
+          height: 100%;
           ${jaSansLight}
         }
         #__next {
