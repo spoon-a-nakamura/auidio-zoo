@@ -47,6 +47,7 @@ const Dictaphone: VFC = () => {
     <Root>
       <Form>
         <Button
+          isCorrect={isCorrect}
           show={interimTranscript}
           onClick={SpeechRecognition.abortListening}
         >
@@ -123,6 +124,7 @@ const Box = styled.div`
 `;
 type ButtonProps = {
   show: string;
+  isCorrect: boolean;
 };
 const Button = styled.button<ButtonProps>`
   padding: 2vw 6vw;
@@ -136,8 +138,9 @@ const Button = styled.button<ButtonProps>`
   transition: all ease-in-out 0.3s;
   @media ${device.underTablet} {
     display: block;
-    opacity: ${({ show }) => (show ? 1 : 0)};
-    transform: ${({ show }) => (show ? 'translateY(-6px)' : 'translateY(0)')};
+    opacity: ${({ show, isCorrect }) => (!isCorrect && show ? 1 : 0)};
+    transform: ${({ show, isCorrect }) =>
+      !isCorrect && show ? 'translateY(-6px)' : 'translateY(0)'};
     margin: 0 auto 3vh;
   }
 `;
