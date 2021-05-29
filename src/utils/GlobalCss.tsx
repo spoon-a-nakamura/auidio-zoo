@@ -19,7 +19,6 @@ export default function GlobalCss() {
           margin: 0;
           font-size: 14px;
           color: #333;
-          background: #fff;
           font-family: vdl-megamaru, sans-serif;
           font-weight: 400;
           font-style: normal;

@@ -8,27 +8,46 @@ import Confetti from 'react-confetti';
 
 const Dictaphone: VFC = () => {
   const [isCorrect, setIsCorrect] = useState(false);
+  const [animal, setAnimal] = useState('elephant');
+  // 'elephant'
+  // 'pig',
+  // 'chick',
+  // 'panda',
+  // 'hippopotamus',
+  // 'mouse',
   const commands = [
     {
-      command: ['ぞう', '象', 'ぞうさん', 'エレファント'],
+      command: [
+        'ぞう',
+        '象',
+        'ぞうさん',
+        'エレファント',
+        '豚さん',
+        '歌',
+        'ひよこ',
+        'パンダ',
+        'カバ',
+        'ねずみ',
+        'マウス',
+      ],
       callback: () => {
         !isCorrect && setIsCorrect(true);
-        console.log('正解です！');
-        SpeechRecognition.abortListening;
         setTimeout(() => {
-          resetTranscript;
           setIsCorrect(false);
-          SpeechRecognition.startListening({ continuous: true });
+          animal === 'elephant' && setAnimal('pig');
+          animal === 'pig' && setAnimal('chick');
+          animal === 'chick' && setAnimal('panda');
+          animal === 'panda' && setAnimal('hippopotamus');
+          animal === 'hippopotamus' && setAnimal('mouse');
+          animal === 'mouse' && setAnimal('elephant');
         }, 6000);
       },
       matchInterim: true,
     },
   ];
-  const { transcript, resetTranscript, finalTranscript, interimTranscript } =
-    useSpeechRecognition({ commands });
+  const { transcript, interimTranscript } = useSpeechRecognition({ commands });
   useEffect(() => {
     SpeechRecognition.startListening;
-    finalTranscript && SpeechRecognition.abortListening;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SpeechRecognition.startListening()]);
 
@@ -44,7 +63,7 @@ const Dictaphone: VFC = () => {
     );
   }
   return (
-    <Root>
+    <Root animal={animal}>
       <Form>
         <Button
           isCorrect={isCorrect}
@@ -77,7 +96,10 @@ const Dictaphone: VFC = () => {
 };
 export default Dictaphone;
 
-const Root = styled.div`
+type RootProps = {
+  animal: string;
+};
+const Root = styled.div<RootProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,9 +107,11 @@ const Root = styled.div`
   text-align: center;
   height: 100vh;
   width: 100%;
-  background: url(/images/animals/elephant_pc@2x.png) center / contain no-repeat;
+  background: ${({ animal }) =>
+    `url(/images/animals/${animal}_pc@2x.png) center / contain no-repeat`};
   @media ${device.underTablet} {
-    background-image: url(/images/animals/elephant_sp@2x.png);
+    background-image: ${({ animal }) =>
+      `url(/images/animals/${animal}_sp@2x.png)`};
     height: 100%;
   }
 `;
