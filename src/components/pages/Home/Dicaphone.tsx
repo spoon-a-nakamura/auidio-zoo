@@ -9,49 +9,65 @@ import Confetti from 'react-confetti';
 const Dictaphone: VFC = () => {
   const [isCorrect, setIsCorrect] = useState(false);
   const [animal, setAnimal] = useState('elephant');
-  // 'elephant'
-  // 'pig',
-  // 'chick',
-  // 'panda',
-  // 'hippopotamus',
-  // 'mouse',
-  const commands = [
-    {
-      command: [
-        'ぞう',
-        '蔵',
-        '象',
-        'ぶた',
-        '豚',
-        '歌',
-        'ひよこ',
-        'ぱんだ',
-        'パンダ',
-        'カバ',
-        'かば',
-        'ネズミ',
-        'ねずみ',
-        'マウス',
-        'まうす',
-      ],
-      callback: () => {
-        setIsCorrect(true);
-        SpeechRecognition.stopListening;
-        SpeechRecognition.abortListening;
-        resetTranscript;
-        setTimeout(() => {
-          animal === 'elephant' && setAnimal('pig');
-          animal === 'pig' && setAnimal('chick');
-          animal === 'chick' && setAnimal('panda');
-          animal === 'panda' && setAnimal('hippopotamus');
-          animal === 'hippopotamus' && setAnimal('mouse');
-          animal === 'mouse' && setAnimal('elephant');
-          setIsCorrect(false);
-        }, 5000);
-      },
-      matchInterim: true,
-    },
-  ];
+
+  const nextRecord = (next: string) => {
+    SpeechRecognition.stopListening;
+    SpeechRecognition.abortListening;
+    resetTranscript;
+    setIsCorrect(true);
+    setTimeout(() => {
+      setAnimal(next);
+      setIsCorrect(false);
+    }, 5000);
+  };
+  const commands: any =
+    animal === 'elephant'
+      ? [
+          {
+            command: ['ぞう', '蔵', '象'],
+            callback: () => nextRecord('pig'),
+            matchInterim: true,
+          },
+        ]
+      : animal === 'pig'
+      ? [
+          {
+            command: ['ぶた', '豚', '歌'],
+            callback: () => nextRecord('chick'),
+            matchInterim: true,
+          },
+        ]
+      : animal === 'chick'
+      ? [
+          {
+            command: ['ひよこ'],
+            callback: () => nextRecord('panda'),
+            matchInterim: true,
+          },
+        ]
+      : animal === 'panda'
+      ? [
+          {
+            command: ['ぱんだ', 'パンダ'],
+            callback: () => nextRecord('hippopotamus'),
+            matchInterim: true,
+          },
+        ]
+      : animal === 'hippopotamus'
+      ? [
+          {
+            command: ['カバ', 'かば'],
+            callback: () => nextRecord('mouse'),
+            matchInterim: true,
+          },
+        ]
+      : animal === 'mouse' && [
+          {
+            command: ['ネズミ', 'ねずみ', 'マウス', 'まうす'],
+            callback: () => nextRecord('elephant'),
+            matchInterim: true,
+          },
+        ];
   const { transcript, interimTranscript, resetTranscript } =
     useSpeechRecognition({ commands });
   useEffect(() => {
