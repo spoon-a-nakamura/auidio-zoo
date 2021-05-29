@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { VFC } from 'react';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 
-const Dictaphone = () => {
+const Dictaphone: VFC = () => {
   const { transcript, resetTranscript } = useSpeechRecognition();
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -19,9 +19,9 @@ const Dictaphone = () => {
     <Root>
       <Heading>STARTボタンを押して、好きな動物の名前を言ってください。</Heading>
       <ButtonGroup>
-        <Button onClick={SpeechRecognition.startListening}>START</Button>
-        <Button onClick={SpeechRecognition.stopListening}>STOP</Button>
-        <Button onClick={resetTranscript}>RESET</Button>
+        <Button onClick={() => SpeechRecognition.startListening}>START</Button>
+        <Button onClick={() => SpeechRecognition.stopListening}>STOP</Button>
+        <Button onClick={() => resetTranscript}>RESET</Button>
       </ButtonGroup>
       <Box>
         <Transcript>{transcript}</Transcript>
