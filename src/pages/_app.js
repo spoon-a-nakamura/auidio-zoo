@@ -1,6 +1,7 @@
 import GlobalCss from '../utils/GlobalCss'
 import { adobeLoader } from '../utils/adobeLoader'
 import { useEffect } from 'react'
+import 'regenerator-runtime/runtime.js'
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
