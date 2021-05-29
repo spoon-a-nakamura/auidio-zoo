@@ -9,13 +9,6 @@ import Confetti from 'react-confetti';
 const Dictaphone: VFC = () => {
   useEffect(() => {
     SpeechRecognition.startListening;
-    console.log('録音開始');
-    console.log(transcript);
-    console.log(isCorrect);
-    setTimeout(() => {
-      SpeechRecognition.stopListening;
-      console.log('録音停止');
-    }, 1000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SpeechRecognition.startListening()]);
 
@@ -30,6 +23,7 @@ const Dictaphone: VFC = () => {
           setIsCorrect(false);
         }, 3000);
       },
+      matchInterim: true,
     },
   ];
   const { transcript } = useSpeechRecognition({ commands });
