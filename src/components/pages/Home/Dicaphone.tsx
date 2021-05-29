@@ -7,12 +7,6 @@ import { device } from '../../../utils/MediaQuery';
 import Confetti from 'react-confetti';
 
 const Dictaphone: VFC = () => {
-  useEffect(() => {
-    SpeechRecognition.startListening;
-    finalTranscript && SpeechRecognition.abortListening;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [SpeechRecognition.startListening()]);
-
   const [isCorrect, setIsCorrect] = useState(false);
   const commands = [
     {
@@ -24,8 +18,8 @@ const Dictaphone: VFC = () => {
         setTimeout(() => {
           resetTranscript;
           setIsCorrect(false);
-          SpeechRecognition.startListening();
-        }, 3000);
+          SpeechRecognition.startListening({ continuous: true });
+        }, 6000);
       },
       matchInterim: true,
     },
@@ -33,6 +27,11 @@ const Dictaphone: VFC = () => {
   const { transcript, resetTranscript, finalTranscript } = useSpeechRecognition(
     { commands },
   );
+  useEffect(() => {
+    SpeechRecognition.startListening;
+    finalTranscript && SpeechRecognition.abortListening;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [SpeechRecognition.startListening()]);
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return (
@@ -47,25 +46,25 @@ const Dictaphone: VFC = () => {
   }
   return (
     <Root>
+      <Button onClick={SpeechRecognition.stopListening}>停止</Button>
+      <Button onClick={SpeechRecognition.abortListening}>やり直し</Button>
       <Box>
         <Transcript>
           {isCorrect ? '正解！' : transcript ? transcript : 'ぼくだーれだ？'}
         </Transcript>
       </Box>
       {isCorrect && (
-        <>
-          <Confetti
-            recycle={true}
-            numberOfPieces={40}
-            style={{
-              width: '100%',
-              height: 'auto',
-              position: 'fixed',
-              top: 0,
-              left: 0,
-            }}
-          />
-        </>
+        <Confetti
+          recycle={true}
+          numberOfPieces={40}
+          style={{
+            width: '100%',
+            height: 'auto',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+          }}
+        />
       )}
     </Root>
   );
@@ -99,7 +98,7 @@ const Box = styled.div`
   animation: box 2s ease-in-out infinite;
   @media ${device.underTablet} {
     padding: 3vh 10vw;
-    margin: auto auto 10vh;
+    margin-bottom: 10vh;
   }
   @keyframes box {
     0% {
@@ -113,34 +112,22 @@ const Box = styled.div`
     }
   }
 `;
+const Button = styled.button`
+  padding: 2vw 6vw;
+  font-size: 4vw;
+  border-radius: 100px;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  @media ${device.underTablet} {
+    margin: auto auto 2vh;
+  }
+`;
 const Transcript = styled.p`
   font-size: 40px;
   transition: all ease-in-out 0.3s;
   @media ${device.underTablet} {
     font-size: 5vw;
   }
-`;
-const CorrectWrap = styled.div`
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  top: 50vh;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 1000px;
-  width: 300px;
-  height: 300px;
-  backdrop-filter: blur(20px);
-  @media ${device.underTablet} {
-    transform: scale(0.5) translateY(-50%);
-  }
-`;
-const CorrectMessage = styled.p`
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0.2em;
-  font-size: 40px;
-  padding: 10px;
 `;
