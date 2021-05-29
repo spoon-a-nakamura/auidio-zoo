@@ -34,7 +34,7 @@ const App: NextPage<AppProps> = ({ Component, pageProps }) => {
         <meta property="og:title" content="ANIMAL FACE" />
         <meta
           property="og:image"
-          content="https://auidio-zoo.vercel.app/images/common/ogimg.jpg"
+          content="https://auidio-zoo.vercel.app/images/common/ogimg.png"
         />
         <meta property="og:description" content="ANIMAL FACE" />
         <meta property="og:url" content="https://auidio-zoo.vercel.app/" />
