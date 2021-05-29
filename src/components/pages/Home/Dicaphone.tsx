@@ -4,8 +4,16 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 
+const commands = [
+  {
+    command: 'ぞうさん',
+    callback: () => alert('正解です！'),
+    matchInterim: true,
+  },
+];
+
 const Dictaphone: VFC = () => {
-  const { transcript, resetTranscript } = useSpeechRecognition();
+  const { transcript, resetTranscript } = useSpeechRecognition({ commands });
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return (
@@ -19,9 +27,9 @@ const Dictaphone: VFC = () => {
     <Root>
       <Heading>STARTボタンを押して、好きな動物の名前を言ってください。</Heading>
       <ButtonGroup>
-        <Button onClick={() => SpeechRecognition.startListening}>START</Button>
-        <Button onClick={() => SpeechRecognition.stopListening}>STOP</Button>
-        <Button onClick={() => resetTranscript}>RESET</Button>
+        <Button onClick={SpeechRecognition.startListening}>START</Button>
+        <Button onClick={SpeechRecognition.stopListening}>STOP</Button>
+        <Button onClick={resetTranscript}>RESET</Button>
       </ButtonGroup>
       <Box>
         <Transcript>{transcript}</Transcript>
@@ -37,6 +45,7 @@ const Root = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
+  height: 100vh;
 `;
 const Heading = styled.h1`
   font-size: 20px;
@@ -56,6 +65,10 @@ const Button = styled.button`
   border: none;
   color: #fff;
   cursor: pointer;
+  transition: all ease 0.4s;
+  &:hover {
+    background: #222;
+  }
 `;
 const Box = styled.div`
   display: flex;
