@@ -1,5 +1,6 @@
 import emotionReset from 'emotion-reset';
 import { Global, css } from '@emotion/react';
+import { device } from '../utils/MediaQuery';
 
 export default function GlobalCss() {
   return (
@@ -22,8 +23,14 @@ export default function GlobalCss() {
           font-family: vdl-megamaru, sans-serif;
           font-weight: 400;
           font-style: normal;
+          @media ${device.underTablet} {
+            height: 100%;
+          }
         }
         #__next {
+          @media ${device.underTablet} {
+            height: 100%;
+          }
         }
         /* AdobeFont */
         /* html {

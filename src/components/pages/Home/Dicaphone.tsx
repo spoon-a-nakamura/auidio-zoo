@@ -24,9 +24,8 @@ const Dictaphone: VFC = () => {
       matchInterim: true,
     },
   ];
-  const { transcript, resetTranscript, finalTranscript } = useSpeechRecognition(
-    { commands },
-  );
+  const { transcript, resetTranscript, finalTranscript, interimTranscript } =
+    useSpeechRecognition({ commands });
   useEffect(() => {
     SpeechRecognition.startListening;
     finalTranscript && SpeechRecognition.abortListening;
@@ -46,13 +45,19 @@ const Dictaphone: VFC = () => {
   }
   return (
     <Root>
-      <Button onClick={SpeechRecognition.stopListening}>停止</Button>
-      <Button onClick={SpeechRecognition.abortListening}>やり直し</Button>
-      <Box>
-        <Transcript>
-          {isCorrect ? '正解！' : transcript ? transcript : 'ぼくだーれだ？'}
-        </Transcript>
-      </Box>
+      <Form>
+        <Button
+          show={interimTranscript}
+          onClick={SpeechRecognition.abortListening}
+        >
+          やり直す
+        </Button>
+        <Box>
+          <Transcript>
+            {isCorrect ? '正解！' : transcript ? transcript : 'ぼくだーれだ？'}
+          </Transcript>
+        </Box>
+      </Form>
       {isCorrect && (
         <Confetti
           recycle={true}
@@ -82,7 +87,11 @@ const Root = styled.div`
   background: url(/images/animals/elephant_pc@2x.png) center / contain no-repeat;
   @media ${device.underTablet} {
     background-image: url(/images/animals/elephant_sp@2x.png);
+    height: 100%;
   }
+`;
+const Form = styled.div`
+  margin: auto auto 2vh;
 `;
 const Box = styled.div`
   display: flex;
@@ -112,7 +121,10 @@ const Box = styled.div`
     }
   }
 `;
-const Button = styled.button`
+type ButtonProps = {
+  show: string;
+};
+const Button = styled.button<ButtonProps>`
   padding: 2vw 6vw;
   font-size: 4vw;
   border-radius: 100px;
@@ -120,8 +132,13 @@ const Button = styled.button`
   color: #fff;
   border: none;
   font-weight: bold;
+  display: none;
+  transition: all ease-in-out 0.3s;
   @media ${device.underTablet} {
-    margin: auto auto 2vh;
+    display: block;
+    opacity: ${({ show }) => (show ? 1 : 0)};
+    transform: ${({ show }) => (show ? 'translateY(-6px)' : 'translateY(0)')};
+    margin: 0 auto 3vh;
   }
 `;
 const Transcript = styled.p`
