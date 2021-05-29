@@ -17,21 +17,9 @@ const Dictaphone: VFC = () => {
   // 'mouse',
   const commands = [
     {
-      command: [
-        '象',
-        '蔵',
-        'ぞうさん',
-        'エレファント',
-        '豚さん',
-        '豚',
-        'ひよこ',
-        'パンダ',
-        'かば',
-        'ネズミ',
-        'マウス',
-      ],
+      command: ['ぞう', 'ぶた', 'ひよこ', 'ぱんだ', 'かば', 'ねずみ', 'まうす'],
       callback: () => {
-        !isCorrect && setIsCorrect(true);
+        setIsCorrect(true);
         setTimeout(() => {
           setIsCorrect(false);
           animal === 'elephant' && setAnimal('pig');
@@ -40,7 +28,7 @@ const Dictaphone: VFC = () => {
           animal === 'panda' && setAnimal('hippopotamus');
           animal === 'hippopotamus' && setAnimal('mouse');
           animal === 'mouse' && setAnimal('elephant');
-        }, 6000);
+        }, 5000);
       },
       matchInterim: true,
     },
