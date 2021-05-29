@@ -27,6 +27,7 @@ const Dictaphone: VFC = () => {
     <Root>
       <Heading>STARTボタンを押して、好きな動物の名前を言ってください。</Heading>
       <ButtonGroup>
+        {/* TODO: onClick と startListening の型関係解決 */}
         <Button onClick={SpeechRecognition.startListening}>START</Button>
         <Button onClick={SpeechRecognition.stopListening}>STOP</Button>
         <Button onClick={resetTranscript}>RESET</Button>
