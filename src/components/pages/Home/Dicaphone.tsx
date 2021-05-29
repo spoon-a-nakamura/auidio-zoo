@@ -17,17 +17,26 @@ const Dictaphone: VFC = () => {
   // 'mouse',
   const commands = [
     {
-      command: ['ぞう', 'ぶた', 'ひよこ', 'ぱんだ', 'かば', 'ねずみ', 'まうす'],
+      command: [
+        '蔵',
+        '象',
+        '豚',
+        'ひよこ',
+        'パンダ',
+        'カバ',
+        'ねずみ',
+        'まうす',
+      ],
       callback: () => {
         setIsCorrect(true);
         setTimeout(() => {
-          setIsCorrect(false);
           animal === 'elephant' && setAnimal('pig');
           animal === 'pig' && setAnimal('chick');
           animal === 'chick' && setAnimal('panda');
           animal === 'panda' && setAnimal('hippopotamus');
           animal === 'hippopotamus' && setAnimal('mouse');
           animal === 'mouse' && setAnimal('elephant');
+          setIsCorrect(false);
         }, 5000);
       },
       matchInterim: true,
