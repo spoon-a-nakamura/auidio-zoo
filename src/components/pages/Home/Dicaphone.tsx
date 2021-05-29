@@ -36,6 +36,8 @@ const Dictaphone: VFC = () => {
       ],
       callback: () => {
         setIsCorrect(true);
+        SpeechRecognition.stopListening;
+        SpeechRecognition.abortListening;
         resetTranscript;
         setTimeout(() => {
           animal === 'elephant' && setAnimal('pig');
