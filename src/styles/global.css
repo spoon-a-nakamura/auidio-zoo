@@ -1,0 +1,44 @@
+html {
+  font-size: calc(1000vw / 375);
+}
+
+@media (orientation: landscape) {
+  html {
+    font-size: calc(1000vw / 1280);
+  }
+}
+
+@media (min-aspect-ratio: 2/1) {
+  html {
+    font-size: calc(1000vh / 640);
+  }
+  body {
+    background: #f1f1f1;
+  }
+}
+
+body {
+  font-size: 1.6rem;
+  text-size-adjust: 100%;
+  font-family: vdl-megamaru, -apple-system, BlinkMacSystemFont, Roboto,
+    'Segoe UI', 'Helvetica Neue', HelveticaNeue, '游ゴシック体', YuGothic,
+    '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック', 'Yu Gothic', Verdana,
+    Meiryo, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #333;
+}
+
+input,
+select,
+button {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+svg:not([fill]) {
+  fill: currentColor;
+}

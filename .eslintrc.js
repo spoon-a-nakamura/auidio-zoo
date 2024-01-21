@@ -5,21 +5,24 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:react-hooks/recommended',
-    'plugin:react/recommended',
     'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/jsx-runtime',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 12,
+    ecmaVersion: 13,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
   rules: {
-    'react/react-in-jsx-scope': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react/self-closing-comp': 'warn',
     'react/prop-types': 'off',
   },
   settings: {

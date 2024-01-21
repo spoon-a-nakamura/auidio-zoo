@@ -1,11 +1,9 @@
-# OKINA PROJECT
-
-## Getting Started
-
-First, run the development server:
+# Animal Face
 
 ```bash
+yarn install
 yarn dev
+yarn lint
+yarn format
+yarn build
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
